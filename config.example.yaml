@@ -167,7 +167,10 @@ access:
 
 # Routing strategy for selecting credentials when multiple match.
 routing:
-  strategy: "round-robin" # round-robin (default), weighted-round-robin, fill-first
+  strategy: "round-robin" # round-robin (default), weighted-round-robin, fill-first, soonest-reset
+  # soonest-reset spends first the available credential whose Claude 7-day quota window resets
+  # soonest, so less quota is left unused at a reset. Credentials with no known future reset
+  # (not yet observed since start-up, other providers) come last; ties rotate round-robin.
   # weighted-round-robin uses each credential's integer weight (default 1, maximum 1,000,000).
   # Non-positive weights exclude the credential while this strategy is active.
   # Sticky requests (including inherited and LCP bindings) also consume weighted credits
